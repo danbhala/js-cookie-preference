@@ -6,54 +6,58 @@ const config = require('config');
 /*-------------------------------------------------*/
 
 module.exports = {
-    // webpack optimization mode
-    mode: ( process.env.NODE_ENV ? process.env.NODE_ENV : 'development' ),
+  // webpack optimization mode
+  mode: (process.env.NODE_ENV ? process.env.NODE_ENV : 'development'),
 
-    // entry file(s)
-    entry: './src/index.js',
+  // entry file(s)
+  entry: './src/index.js',
 
-    // output file(s) and chunks
-    output: {
-        library: 'CookiePreference',
-        libraryTarget: 'umd',
-        globalObject: '(typeof self !== "undefined" ? self : this)',
-        libraryExport: 'default',
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js',
-        publicPath: config.get('publicPath')
-    },
+  // output file(s) and chunks
+  output: {
+    library: 'CookiePreference',
+    libraryTarget: 'umd',
+    globalObject: '(typeof self !== "undefined" ? self : this)',
+    libraryExport: 'default',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js',
+    publicPath: config.get('publicPath')
+  },
 
-    // module/loaders configuration
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: ['babel-loader']
-            },
-            {
-                test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
-            }
-        ]
-    },
+  // module/loaders configuration
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+      }
+    ]
+  },
 
-    plugins: [
-        new HTMLWebpackPlugin({
-            template: path.resolve(__dirname, 'index.html')
-        })
-    ],
+  plugins: [
+    new HTMLWebpackPlugin({
+      template: path.resolve(__dirname, 'index.html')
+    })
+  ],
 
-    // development server configuration
-    devServer: {
-        
-        // must be `true` for SPAs
-        historyApiFallback: true,
+  // development server configuration
+  devServer: {
 
-        // open browser on server start
-        open: config.get('open')
-    },
+    // must be `true` for SPAs
+    historyApiFallback: true,
 
-    // generate source map
-    devtool: ( 'production' === process.env.NODE_ENV ? 'source-map' : 'cheap-module-eval-source-map' ),
+    // open browser on server start
+    open: config.get('open')
+  },
+
+  // generate source map
+  devtool: ('production' === process.env.NODE_ENV ? 'source-map' : 'cheap-module-eval-source-map'),
 };

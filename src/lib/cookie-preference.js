@@ -1,68 +1,69 @@
 // import dependencies
 import { concat } from '../util/string';
+import CookieBanner from '../views/cookie-banner.html';
+import Handlebars from 'handlebars';
+
 
 // return CookiePreference class
-export class CookiePreference{
-    constructor(elem, users){
-        this.elem = elem;
-        this.users = users;
+export class CookiePreference {
+  constructor(elem, params) {
+    this.elem = elem;
+    this.params = params;
 
-        this.initialized = false;
-    }
+    console.log('params', params)
 
-    // initialize plugin
-    init() {
-        let ul = document.createElement( 'ul' );
-        ul.classList.add('users-list');
+    this.initialized = false;
 
-        // store element reference
-        this.ul = this.elem.appendChild( ul );
+    this.init();
+  }
 
-        // render initial list of users
-        this.renderList();
+  // initialize plugin
+  init() {
 
-        // set initialized to `true`
-        this.initialized = true;
-    }
+    // Render Cookie Banner
+    this.renderCookieBanner();
 
-    // get fullname of the user
-    getUserFullName( user ) {
-        return concat( user.firstname, user.lastname );
-    }
+    // set initialized to `true`
+    this.initialized = true;
+  }
 
-    // get list of users with fullname
-    getUsers() {
-        return this.users.map( user => this.getUserFullName( user ) );
-    }
+  // get fullname of the user
+  getUserFullName(user) {
+    return concat(user.firstname, user.lastname);
+  }
 
-    // return `li` element with user fullname
-    getUserLi( fullname ) {
-       let li = document.createElement( 'li' );
-       li.innerText = fullname;
+  // get list of users with fullname
+  getUsers() {
+    return this.users.map(user => this.getUserFullName(user));
+  }
 
-       return li;
-    }
+  // return `li` element with user fullname
+  getUserLi(fullname) {
+    let li = document.createElement('li');
+    li.innerText = fullname;
 
-    // append `li` element to the users `ul` element
-    appendLi( li ) {
-        this.ul.appendChild( li );
-    }
+    return li;
+  }
 
-    // render entire users list
-    renderList() {
-        let users = this.getUsers();
-        let liElements = users.map( fullname => this.getUserLi( fullname ) );
+  // append `li` element to the users `ul` element
+  appendLi(li) {
+    this.ul.appendChild(li);
+  }
 
-        for( let li of liElements ){
-            this.appendLi( li );
-        }
-    }
+  // render entire users list
+  renderCookieBanner() {
+    let that = this;
+    let markup = document.createElement('div');
+    var template = Handlebars.compile(CookieBanner);
+    markup.innerHTML = template(that.params.cookieBanner)
+    this.elem.appendChild(markup);
+  }
 
-    // add new user
-    addUser( user ) {
-        let fullname = this.getUserFullName( user );
-        let li = this.getUserLi( fullname );
+  // add new user
+  addUser(user) {
+    let fullname = this.getUserFullName(user);
+    let li = this.getUserLi(fullname);
 
-        this.appendLi( li );
-    }
+    this.appendLi(li);
+  }
 }
