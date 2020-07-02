@@ -1,4 +1,7 @@
 # js-cookie-preference
+
+This plugin will not work, its currently in development and not intended for public use.
+
 VanillaJS (_pure JavaScript_) plugin starter with **Webpack 4** and **Babel 7**.
 
 # Clone this repository
@@ -6,7 +9,7 @@ VanillaJS (_pure JavaScript_) plugin starter with **Webpack 4** and **Babel 7**.
 git clone -b webpack-4-babel-7 https://github.com/danbhala/js-cookie-preference.git [dest]
 ```
 
-> Here, `dest` is your destination directory in which the boilerplate code will be copied.
+> Here, `dist` is your destination directory in which the boilerplate code will be copied.
 
 # Instructions
 - Use `npm install` command to install dependencies.
