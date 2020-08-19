@@ -1,0 +1,79 @@
+{
+	"ui_translations_mandatory": "Mandatory",
+	"ui_translations_th_purpose": "Purpose",
+	"ui_translations_th_expires": "Expires",
+	"analytics_cookie_details": [
+		{
+			"name": "_ga",
+			"expires": "2 years",
+			"purpose": "Google Analytics. Tells us how you use our websites. Used to ensure the website operates sufficiently for users."
+		},
+		{
+			"name": "_gat",
+			"expires": "1 minute",
+			"purpose": "Google Analytics. Helps stop Google Analytics web servers crashing when collecting information on how you use our websites. Used to ensure the website operates sufficiently for users."
+		},
+		{
+			"name": "_gid",
+			"expires": "24 hours",
+			"purpose": "Google Analytics. Sets a unique (anonymous) ID for your session to help tell us how you use our websites. Used to ensure the website operates sufficiently for users."
+		},
+		{
+			"name": "_gali",
+			"expires": "30 seconds",
+			"purpose": "Used by Google Analytics to determine which links on a page are being clicked."
+		},
+		{
+			"name": "___utmvc",
+			"expires": "Session",
+			"purpose": "This cookie enables the function of Google Analytics."
+		}
+	],
+	"analytics_enable": true,
+	"analytics_title": "Analytics",
+	"cookie_banner_accept_cta_text": "Accept all",
+	"cookie_banner_title": "We use cookies on this website",
+	"functional_title": "Functional",
+	"advertising_enable": false,
+	"cookie_banner_text": "By using this site, you agree that we may store and access cookies on your device.",
+	"necessary_title": "Necessary",
+	"ui_translations_th_name": "Name",
+	"functional_enable": true,
+	"functional_cookie_details": [
+		{
+			"name": "example",
+			"expires": "1 Year",
+			"purpose": "This is a test"
+		}
+	],
+	"necessary_cookie_details": [
+		{
+			"name": "ApplicationGatewayAffinity",
+			"expires": "Session",
+			"purpose": "This cookie is used by Azure Apps to keep a user session on the same server."
+		},
+		{
+			"name": "ApplicationGatewayAffinityCORS",
+			"expires": "Session",
+			"purpose": "This cookie is used by Azure Apps to keep a user session on the same server."
+		},
+		{
+			"name": "cookiesAccept",
+			"expires": "1 Year",
+			"purpose": "Cookie that remembers users' privacy choices."
+		},
+		{
+			"name": "cookieAnalytics",
+			"expires": "1 Year",
+			"purpose": "Cookie that remembers users' privacy choices."
+		}
+	],
+	"cookie_banner_policy_url": "/cookie-policy/",
+	"ui_translations_declined": "Declined",
+	"ui_translations_toggle_cookies_cta": "View cookies",
+	"cookie_banner_manage_cta_text": "Manage cookies",
+	"performance_enable": false,
+	"ui_translations_accepted": "Declined",
+	"gtmTagId": 2147483646,
+	"gtmEventId": 1
+}

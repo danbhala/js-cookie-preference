@@ -1,0 +1,50 @@
+#jscpDialog {
+  .jscp__cookie-banner {
+    line-height: 1.62;
+    font-family: $font-family;
+    font-size: 1rem;
+    background-color: $prussian-blue;
+    color: $honeydew;
+    padding: 1.5rem 0;
+    list-style-type: none;
+    .jscp__container {
+      @media screen and (min-width: 768px) {
+        display: flex;
+        align-items: center;
+      }
+    }
+    
+  }
+
+  .jscp__cookie-banner__title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+  }
+  .jscp__cookie-banner__text {
+    line-height: 1.75;
+    margin-top: 0;
+    a {
+      color: $honeydew;
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .jscp__cookie-banner__description {
+    
+  }
+  
+  .jscp__cookie-banner__controls {
+    @media screen and (min-width: 768px) {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+  }
+}
+

@@ -4,86 +4,126 @@ $honeydew: #f1faeeff;
 $powder-blue: #a8dadcff;
 $celadon-blue: #457b9dff;
 $prussian-blue: #1d3557ff;
+$font-family: Arial, Helvetica, Verdana, sans-serif;
 
-.jscp__btn {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  touch-action: manipulation;
-  cursor: pointer;
-  background-image: none;
-  border: 1px solid transparent;
-  white-space: nowrap;
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 2px;
-  user-select: none;
-}
+@import "./reset";
+@import "./toggle";
+@import "./cookie-banner";
+@import "./cookie-management";
 
-.jscp__btn-primary {
-  border-color: $honeydew;
-  background-color: $honeydew; 
-  color: $prussian-blue;
-  &:hover, &:active, &:focus {
-    background-color: $powder-blue; 
-    border-color: $powder-blue; 
-    color: $prussian-blue;
-  }
-}
-
-.jscp__btn-secondary {
-  border-color: $honeydew;
-  background-color: transparent;
-  color: $honeydew;
-  &:hover, &:active, &:focus {
-    background-color: $honeydew; 
-    color: $prussian-blue;
-  }
-}
-
-.jscp__cookie-banner {
-  line-height: 1.62;
+#jscpDialog {
+  // @include reset();
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  font-family: sans-serif;
+  z-index: 2147483645;
+  font-family: $font-family;
   font-size: 1rem;
-  background-color: $prussian-blue;
-  color: $honeydew;
-  padding: 1.5rem;
-  list-style-type: none;
-  @media screen and (min-width: 768px) {
-    display: flex;
-    align-items: center;
+  // * {
+  //   font-family: $font-family;
+  //   margin: 0;
+  //   padding: 0;
+  //   font-weight: 400;
+  //   line-height: normal;
+  //   &:after,
+  //   &:before {
+  //     box-sizing: border-box;
+  //   }
+  // }
+  .jscp__mb-1 {
+    margin-bottom: 0.5rem !important;
   }
-}
-
-.jscp__cookie-banner__title {
-  margin-top: 0;
-  font-size: 1.25rem;
-}
-
-.jscp__cookie-banner__description {
-  p {
-    margin-top: 0;
+  .jscp__mb-2 {
+    margin-bottom: 1rem !important;
   }
-  a {
-    color: $honeydew;
-    &:hover {
-      text-decoration: none;
+  .jscp__mb-3 {
+    margin-bottom: 2rem !important;
+  }
+  .jscp__mb-4 {
+    margin-bottom: 5rem !important;
+  }
+  .jscp__container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+  }
+  .jscp__btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 2px;
+    user-select: none;
+  }
+
+  .jscp__btn-primary {
+    border-color: $honeydew;
+    background-color: $honeydew;
+    color: $prussian-blue;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $powder-blue;
+      border-color: $powder-blue;
+      color: $prussian-blue;
     }
   }
-  > *:last-child {
-    margin-bottom: 0;
+
+  .jscp__btn-secondary {
+    border-color: $honeydew;
+    background-color: transparent;
+    color: $honeydew;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $honeydew;
+      color: $prussian-blue;
+    }
+  }
+
+  .jscp__btn-toggle {
+    position: relative;
+    border-color: transparent;
+    background-color: transparent;
+    color: $honeydew;
+    text-transform: underline;
+    &:after {
+      content: " ";
+      display: inline-block;
+      position: absolute;
+      right: 5px;
+      top: 15px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      padding: 3px;
+      transform: rotate(45deg);
+    }
+    &.jscp-active {
+      &:after {
+        transform: rotate(-135deg);
+        top: 20px;
+      }
+    }
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent;
+      border-color: transparent;
+      color: $honeydew;
+      outline: none;
+    }
   }
 }
-
-.jscp__cookie-banner__controls {
-  @media screen and (min-width: 768px) {
-    margin-left: auto;
-  }
-}
-

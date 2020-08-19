@@ -1,0 +1,140 @@
+.ios-toggle-wrap {
+  position: relative;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255,255,255,0.1)
+}
+
+.ios-toggle-mega-label-wrap {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap
+}
+
+
+.ios-toggle-mega-label-wrap.ios-toggle-disabled {
+  opacity: 0.5;
+  pointer-events: none
+}
+
+.ios-toggle-mega-label {
+  position: absolute;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%
+}
+
+.ios-toggle>input:checked+label::before,.ios-toggle>input:active+label::before {
+  width: 60%;
+  left: 20%;
+  top: 30%;
+  height: 40%;
+  opacity: 0
+}
+
+.ios-toggle {
+  position: relative;
+  display: inline-block;
+  width: 2.975em;
+  height: 1.75em;
+  border-radius: 1.75em;
+  background: #b7bbc8;
+  vertical-align: middle;
+  margin: 0 0.5rem
+}
+
+.ios-toggle>input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
+  width: 100% !important;
+  height: 100%;
+  position: absolute !important
+}
+
+.ios-toggle>input:checked+label {
+  background: #9b9dad
+}
+
+.ios-toggle>input:checked+label::after {
+  right: 0;
+  left: 1.225em
+}
+
+.ios-toggle>input:active+label::after {
+  right: 0.875em;
+  left: 0
+}
+
+.ios-toggle>input:active:checked+label::after {
+  right: 0;
+  left: 0.875em
+}
+
+.ios-toggle>input[disabled][disabled]+label,.ios-toggle>input[disabled][disabled]+label::before {
+  background: #717790
+}
+
+.ios-toggle>input[disabled][disabled]+label::after {
+  background: #c7c9d3
+}
+
+.ios-toggle>input[disabled][disabled] ~ label {
+  cursor: not-allowed
+}
+
+.ios-toggle>label:not(.ios-toggle-mega-label) {
+  display: block !important;
+  width: 100% !important;
+  height: 100%;
+  border-radius: 1.75em;
+  // -webkit-transition: background 0.125s;
+  // transition: background 0.125s
+}
+
+.ios-toggle>label:not(.ios-toggle-mega-label)::before,.ios-toggle>label:not(.ios-toggle-mega-label)::after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 1.75em;
+  border-radius: inherit;
+  // -webkit-transition: all 0.2s;
+  // transition: all 0.2s
+}
+
+.ios-toggle>label:not(.ios-toggle-mega-label)::before {
+  background: #47cf73;
+  width: 100%
+}
+
+.ios-toggle>label:not(.ios-toggle-mega-label)::after {
+  background: #fff;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  right: 1.225em
+}
+
+.ios-toggle.ios-toggle-ambiguous>input:checked+label {
+  background: #9b9dad
+}
+
+.ios-toggle.ios-toggle-ambiguous>label::before {
+  background: #9b9dad
+}
+
+.ios-toggle.ios-toggle-reverse>input:checked+label {
+  background: #47cf73
+}
+
+.ios-toggle.ios-toggle-reverse>label::before {
+  background: #9b9dad
+}
+
+.ios-toggle.ios-toggle-big {
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5)
+}
