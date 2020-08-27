@@ -7,17 +7,14 @@ import Handlebars from 'handlebars';
 
 // return CookiePreference class
 export class CookiePreference {
-  constructor(params) {
-
-    this.params = params;
-
-    console.log('params', params)
-
+  constructor() {
+    this.params = window.CookiePreferenceData;
+    console.log('params', this.params)
     this.initialized = false;
-
     this.categories = [];
-
-    this.init();
+    if(this.params) {
+      this.init();
+    }
   }
 
   // initialize plugin
