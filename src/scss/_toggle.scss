@@ -38,8 +38,8 @@
   position: relative;
   display: inline-block;
   width: 2.975em;
-  height: 1.75em;
-  border-radius: 1.75em;
+  height: 1.875rem;
+  border-radius: 1.875rem;
   background: #b7bbc8;
   vertical-align: middle;
   margin: 0 0.5rem
@@ -90,9 +90,9 @@
   display: block !important;
   width: 100% !important;
   height: 100%;
-  border-radius: 1.75em;
-  // -webkit-transition: background 0.125s;
-  // transition: background 0.125s
+  border-radius: 1.875rem;
+  -webkit-transition: background 0.125s;
+  transition: background 0.125s
 }
 
 .ios-toggle>label:not(.ios-toggle-mega-label)::before,.ios-toggle>label:not(.ios-toggle-mega-label)::after {
@@ -100,21 +100,21 @@
   content: '';
   top: 0;
   left: 0;
-  height: 1.75em;
+  height: 1.875rem;
   border-radius: inherit;
-  // -webkit-transition: all 0.2s;
-  // transition: all 0.2s
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s
 }
 
 .ios-toggle>label:not(.ios-toggle-mega-label)::before {
-  background: #47cf73;
+  background: var(--jscp-cta-bg);
   width: 100%
 }
 
 .ios-toggle>label:not(.ios-toggle-mega-label)::after {
   background: #fff;
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+  -webkit-transform: scale(0.825);
+  transform: scale(0.825);
   right: 1.225em
 }
 
@@ -127,7 +127,7 @@
 }
 
 .ios-toggle.ios-toggle-reverse>input:checked+label {
-  background: #47cf73
+  background: var(--jscp-cta-bg)
 }
 
 .ios-toggle.ios-toggle-reverse>label::before {

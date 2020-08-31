@@ -4,6 +4,8 @@ $honeydew: #f1faeeff;
 $powder-blue: #a8dadcff;
 $celadon-blue: #457b9dff;
 $prussian-blue: #1d3557ff;
+$white: #ffffff;
+$black: #000000;
 $font-family: Arial, Helvetica, Verdana, sans-serif;
 
 @import "./reset";
@@ -20,17 +22,6 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
   z-index: 2147483645;
   font-family: $font-family;
   font-size: 1rem;
-  // * {
-  //   font-family: $font-family;
-  //   margin: 0;
-  //   padding: 0;
-  //   font-weight: 400;
-  //   line-height: normal;
-  //   &:after,
-  //   &:before {
-  //     box-sizing: border-box;
-  //   }
-  // }
   .jscp__mb-1 {
     margin-bottom: 0.5rem !important;
   }
@@ -63,34 +54,41 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     background-image: none;
     border: 1px solid transparent;
     white-space: nowrap;
-    padding: 0.5rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 2px;
+    padding:1rem 1.5rem;
+    font-size: 1.125rem;
+    border-radius: 5px;
     user-select: none;
+    font-weight: bold;
   }
 
   .jscp__btn-primary {
-    border-color: $honeydew;
-    background-color: $honeydew;
-    color: $prussian-blue;
+    border-color: var(--jscp-cta-bg);
+    background-color: var(--jscp-cta-bg);
+    color: var(--jscp-cta-text);
+    font-size: 1.125rem;
     &:hover,
     &:active,
     &:focus {
-      background-color: $powder-blue;
-      border-color: $powder-blue;
-      color: $prussian-blue;
+      background-color: var(--jscp-cta-bg-hover);
+      border-color: var(--jscp-cta-bg-hover);
+      color: var(--jscp-cta-text);
     }
   }
 
-  .jscp__btn-secondary {
-    border-color: $honeydew;
+  .jscp__btn-link {
+    position: relative;
+    border-color: transparent;
     background-color: transparent;
-    color: $honeydew;
+    color: var(--jscp-links);
+    font-size: 1.125rem;
+    text-decoration: underline;
     &:hover,
     &:active,
     &:focus {
-      background-color: $honeydew;
-      color: $prussian-blue;
+      background-color: transparent;
+      border-color: transparent;
+      outline: none;
+      text-decoration: none;
     }
   }
 
@@ -98,15 +96,14 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     position: relative;
     border-color: transparent;
     background-color: transparent;
-    color: $honeydew;
-    text-transform: underline;
+    color: var(--jscp-links);
     &:after {
       content: " ";
       display: inline-block;
       position: absolute;
       right: 5px;
       top: 15px;
-      border: solid white;
+      border: solid var(--jscp-links);
       border-width: 0 2px 2px 0;
       padding: 3px;
       transform: rotate(45deg);
@@ -122,7 +119,6 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     &:focus {
       background-color: transparent;
       border-color: transparent;
-      color: $honeydew;
       outline: none;
     }
   }

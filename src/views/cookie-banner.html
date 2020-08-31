@@ -1,15 +1,15 @@
 <div class="jscp__cookie-banner" aria-describedby="jscp__cookie-banner__title" role="dialog" lang="en" dir="ltr">
-  <div class="jscp__container">
+  <div class="jscp__container">   
     <div class="jscp__cookie-banner__content">
       {{#if cookie_banner_title }}<h2 id="jscp__cookie-banner__title" class="jscp__cookie-banner__title">{{ cookie_banner_title }}</h2>{{/if}}
       <p class="jscp__cookie-banner__text">
         {{#if cookie_banner_text }}<span class="jscp__cookie-banner__description">{{{ cookie_banner_text }}}</span>{{/if}}
-        {{#if cookie_banner_policy_url }}<span class="jscp__cookie-banner__policy">For more information, please read our <a href="{{ cookie_banner_policy_url }}">Cookie Policy</a>.</span>{{/if}}
+        {{#if cookie_banner_policy_url }}<span class="jscp__cookie-banner__policy"><a href="{{ cookie_banner_policy_url }}">{{ cookie_banner_policy_text }}</a>.</span>{{/if}}
       </p>
     </div>
     <div class="jscp__cookie-banner__controls">
-      <button id="jscp__manageCookies" type="button" class="jscp__btn jscp__btn-secondary">{{cookie_banner_manage_cta_text }}</button>
-      <button id="jscp__acceptAllCookies" type="button" class="jscp__btn jscp__btn-primary">{{ cookie_banner_accept_cta_text }}</button>
+      <button id="jscp__acceptAllCookies" type="button" class="jscp__btn jscp__btn-primary jscp__mb-2">{{ cookie_banner_accept_cta_text }}</button>
+      <button id="jscp__manageCookies" type="button" class="jscp__btn-link">{{cookie_banner_manage_cta_text }}</button>
     </div>
   </div>
 </div>

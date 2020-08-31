@@ -1,15 +1,13 @@
 // import dependencies
-import { concat } from '../util/string';
 import CookieBanner from '../views/cookie-banner.html';
 import CookieManagement from '../views/cookie-management.html';
 import Handlebars from 'handlebars';
 
 
 // return CookiePreference class
-export class CookiePreference {
-  constructor() {
-    this.params = window.CookiePreferenceData;
-    console.log('params', this.params)
+class CookiePreferenceClass {
+  constructor(params) {
+    this.params = params;
     this.initialized = false;
     this.categories = [];
     if(this.params) {
@@ -33,6 +31,9 @@ export class CookiePreference {
       if (this.params.analytics_enable) {
         this.categories.push('analytics')
       }
+      if (this.params.miscellaneous_enable) {
+        this.categories.push('miscellaneous')
+      }
 
       this.renderCookieContainer();
       
@@ -50,6 +51,27 @@ export class CookiePreference {
     this.initialized = true;
   }
 
+  setDesign() {
+    console.log(this.params);
+    let root = document.documentElement;
+    if(this.params.colour_bg) {
+      root.style.setProperty('--jscp-bg', this.params.colour_bg);
+    }
+    if(this.params.colour_text) {
+      root.style.setProperty('--jscp-text', this.params.colour_text);
+    }
+    if(this.params.colour_links) {    
+      root.style.setProperty('--jscp-links', this.params.colour_links);
+    }
+    if(this.params.colour_cta_text) {
+      root.style.setProperty('--jscp-cta-text', this.params.colour_cta_text);
+    }
+    if(this.params.colour_cta_bg) {
+      root.style.setProperty('--jscp-cta-bg', this.params.colour_cta_bg);
+      root.style.setProperty('--jscp-cta-bg-hover', this.lightenDarkenColor(this.params.colour_cta_bg, -20));
+    }
+  }
+
   renderCookieContainer() {
     let that = this;
     let markup = document.createElement('div');
@@ -58,6 +80,7 @@ export class CookiePreference {
   }
 
   updateCookieContainer(markup, callback) {
+    this.setDesign();
     document.getElementById('jscpDialog').innerHTML = markup;
     if (callback) {
       callback();
@@ -152,11 +175,12 @@ export class CookiePreference {
     that.setCookie('cookiesAccepted', 'true');
 
     that.categories.forEach(category => {
+      console.log('cookie' + that.capitalize(category), document.querySelector('input[name="jscp-input-' + category + '"]').checked)
       that.setCookie('cookie' + that.capitalize(category), document.querySelector('input[name="jscp-input-' + category + '"]').checked);
     });
 
     // reload the page
-    document.location.reload(true);
+    // document.location.reload(true);
   }
 
   setDefaultCookieRadios() {
@@ -191,7 +215,7 @@ export class CookiePreference {
     });
 
     // reload the page
-    document.location.reload(true);
+    // document.location.reload(true);
   }
 
   // add new user
@@ -203,10 +227,12 @@ export class CookiePreference {
   }
 
   setCookie(name, value, domain = document.domain, path = '/') {
+    console.log('setCookie:', name + ' = ' + value);
     var date = new Date();
     date.setTime(date.getTime() + (356 * 24 * 60 * 60 * 1000));
     document.cookie = `${name}=${value}; expires=${date.toGMTString()}; path=${path}; domain=${domain};`;
-    document.cookie = name + '=' + value + '; expires=' + date.toGMTString();
+    console.log(this.getCookie(name));
+    //document.cookie = name + '=' + value + '; expires=' + date.toGMTString();
   }
   
   getCookie(a) {
@@ -226,5 +252,23 @@ export class CookiePreference {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
+
+  lightenDarkenColor(col, amt) {
+    console.log(col);
+    if (col.charAt(0) === '#') {
+      col = col.substring(1);
+    }
+    console.log(col);
+    var num = parseInt(col, 16);
+    var r = (num >> 16) + amt;
+    var b = ((num >> 8) & 0x00FF) + amt;
+    var g = (num & 0x0000FF) + amt;
+    var newColor = g | (b << 8) | (r << 16);
+    return '#' + newColor.toString(16);
+  }
   
+}
+
+export function CookiePreference(params) {
+  new CookiePreferenceClass(params);
 }
