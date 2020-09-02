@@ -1,6 +1,6 @@
 {
   "name": "js-cookie-preference",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "VanillaJS plugin to keep track of the user's cookie preferences",
   "main": "dist/index.js",
   "scripts": {
