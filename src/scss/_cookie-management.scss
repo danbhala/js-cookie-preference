@@ -1,59 +1,40 @@
-#jscp__cookie-management__close {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-}
 #jscpDialog {
   .jscp__cookie-management {
-    line-height: 1.62;
-    font-family: $font-family;
     font-size: 1rem;
-    background-color: var(--jscp-bg);
-    color: var(--jscp-text);
-    padding: 5rem 0;
-    list-style-type: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow-y: scroll;
-    * {
-      color: var(--jscp-text);
-      font-size: 1.125rem;
-    }
+    font-family: $font-family;
+    line-height: $line-height-base;
     &__title {
       margin-top: 0;
-      margin-bottom: 15px;
-      font-size: 3rem;
+      margin-bottom: 0;
+      font-size: 1.5rem;
       font-weight: bold;
     }
-
     &__lead {
       margin-top: 0;
-      margin-bottom: 3rem;
-      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
     }
-
-    .jscp-input-label-text {
+    .jscp-input-label-text, strong {
       color: var(--jscp-text);
       font-size: 1.125rem;
       font-weight: bold;
       opacity: 0.7;
     }
-
     &__item {
-      margin-bottom: 15px;
+      margin-bottom: 0.5rem;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
       &__row {
-        max-width: 600px;
         display: flex;
         align-items: baseline;
         flex-wrap: wrap;
         h3 {
-          font-size: 1.375rem;
+          font-size: 1.25rem;
           font-weight: bold;
-          min-width: 190px;
+          min-width: 40%;
           width: 100%;
+          margin-bottom: 0;
           @media (min-width:768px)  { 
             width: auto;
           }
@@ -73,25 +54,22 @@
           display: block;
         }
       }
-      &__table {
-        
+      &__table {        
         width: 100%;
-        margin-bottom: 3rem;
-        background-color: transparent;
-        font-size: 1.25rem;
-      
+        margin-bottom: 1rem;
+        background-color: transparent;      
         th, td {
           padding: .75rem .75rem .75rem 0;
           vertical-align: top;
         }
 
         td {
-          border-top: 1px solid var(--jscp-text);
+          border-top: 1px solid #dee2e6;
         }
       
         thead th {
           vertical-align: bottom;
-          border-bottom: 1px solid var(--jscp-text);
+          border-bottom: 1px solid #dee2e6;
           font-weight: bold;
           &:first-of-type {
             width: 33%;
@@ -102,10 +80,35 @@
         }
       
         tbody + tbody {
-          border-top: (2 * 1px) solid var(--jscp-text);
+          border-top: (2 * 1px) solid #dee2e6;
         }
         
       }
     }
   }
+  .jscp-close {
+    display: inline-block;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    opacity: 0.5;
+  }
+  .jscp-close:hover {
+    opacity: 1;
+  }
+  .jscp-close:before, .jscp-close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+  }
+  .jscp-close:before {
+    transform: rotate(45deg);
+  }
+  .jscp-close:after {
+    transform: rotate(-45deg);
+  }
 }
+

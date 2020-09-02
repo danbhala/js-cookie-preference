@@ -1,0 +1,257 @@
+
+
+// .jscp-modal-open      - body class for killing the scroll
+// .jscp-modal           - container to scroll within
+// .jscp-modal-dialog    - positioning shell for the actual modal
+// .jscp-modal-content   - actual modal w/ bg and corners and stuff
+
+
+.jscp-modal-open {
+  // Kill the scroll on the body
+  overflow: hidden;
+
+  .jscp-modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+// Container that the modal scrolls within
+.jscp-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $zindex-modal;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
+  // We deliberately don't use `-webkit-overflow-scrolling: touch;` due to a
+  // gnarly iOS Safari bug: https://bugs.webkit.org/show_bug.cgi?id=158342
+  // See also https://github.com/twbs/bootstrap/issues/17695
+}
+
+// Shell div to position the modal with bottom padding
+.jscp-modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0;
+  // allow clicks to pass through for custom click handling to close modal
+  pointer-events: none;
+
+  @include media-breakpoint-up(sm) {
+    margin: $modal-dialog-margin;
+  }
+
+  // When fading in the modal, animate it to slide down
+  .jscp-modal.fade & {
+    transition: $modal-transition;
+    transform: $modal-fade-transform;
+  }
+  .jscp-modal.show & {
+    transform: $modal-show-transform;
+  }
+
+  // When trying to close, animate focus to scale
+  .jscp-modal.jscp-modal-static & {
+    transform: $modal-scale-transform;
+  }
+}
+
+.jscp-modal-dialog-scrollable {
+  display: flex; // IE10/11
+  max-height: subtract(100%, $modal-dialog-margin * 2);
+
+  .jscp-modal-content {
+    max-height: subtract(100vh, $modal-dialog-margin * 2); // IE10/11
+    overflow: hidden;
+  }
+
+  .jscp-modal-header,
+  .jscp-modal-footer {
+    flex-shrink: 0;
+  }
+
+  .jscp-modal-body {
+    overflow-y: auto;
+  }
+}
+
+.jscp-modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  min-height: subtract(100%, $modal-dialog-margin * 2);
+
+  // Ensure `modal-dialog-centered` extends the full height of the view (IE10/11)
+  &::before {
+    display: block; // IE10
+    height: subtract(100vh, $modal-dialog-margin * 2);
+    height: min-content; // Reset height to 0 except on IE
+    content: "";
+  }
+
+  // Ensure `.jscp-modal-body` shows scrollbar (IE10/11)
+  &.jscp-modal-dialog-scrollable {
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    .jscp-modal-content {
+      height: 100vh;
+      @include media-breakpoint-up(sm) {
+        max-height: 768px;
+      }
+    }
+
+    &::before {
+      content: none;
+    }
+  }
+}
+
+// Actual modal
+.jscp-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%; // Ensure `.jscp-modal-content` extends the full width of the parent `.jscp-modal-dialog`
+  // counteract the pointer-events: none; in the .jscp-modal-dialog
+  color: $modal-content-color;
+  pointer-events: auto;
+  background-color: $modal-content-bg;
+  background-clip: padding-box;
+  @include media-breakpoint-up(sm) {
+    border: $modal-content-border-width solid $modal-content-border-color;
+    border-radius: $modal-content-border-radius;
+  }
+  box-shadow: $modal-content-box-shadow-xs;
+  // Remove focus outline from opened modal
+  outline: 0;
+}
+
+// Modal background
+.jscp-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $zindex-modal-backdrop;
+  width: 100vw;
+  height: 100vh;
+  background-color: $modal-backdrop-bg;
+
+  // Fade for backdrop
+  &.fade { opacity: 0; }
+  &.show { opacity: $modal-backdrop-opacity; }
+}
+
+// Modal header
+// Top section of the modal w/ title and dismiss
+.jscp-modal-header {
+  display: flex;
+  align-items: flex-start; // so the close btn always stays on the upper right corner
+  justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
+  padding: $modal-header-padding;
+  border-bottom: $modal-header-border-width solid $modal-header-border-color;
+  @include media-breakpoint-up(sm) {
+    border-top-left-radius: $modal-content-inner-border-radius;
+    border-top-right-radius: $modal-content-inner-border-radius;
+  }
+
+  .jscp__btn-reset {
+    padding: $modal-header-padding;
+    // auto on the left force icon to the right even when there is no .jscp-modal-title
+    margin: (-$modal-header-padding-y) (-$modal-header-padding-x) (-$modal-header-padding-y) auto;
+  }
+}
+
+// Title text within header
+.jscp-modal-title {
+  margin-bottom: 0;
+  line-height: $modal-title-line-height;
+}
+
+// Modal body
+// Where all modal content resides (sibling of .jscp-modal-header and .jscp-modal-footer)
+.jscp-modal-body {
+  position: relative;
+  // Enable `flex-grow: 1` so that the body take up as much space as possible
+  // when there should be a fixed height on `.jscp-modal-dialog`.
+  flex: 1 1 auto;
+  padding: $modal-inner-padding;
+}
+
+// Footer (for actions)
+.jscp-modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; // vertically center
+  justify-content: flex-end; // Right align buttons with flex property because text-align doesn't work on flex items
+  padding: $modal-inner-padding - $modal-footer-margin-between / 2;
+  border-top: $modal-footer-border-width solid $modal-footer-border-color;
+  @include media-breakpoint-up(sm) {
+    border-bottom-left-radius: $modal-content-inner-border-radius;
+    border-bottom-right-radius: $modal-content-inner-border-radius;
+  }
+
+  // Place margin between footer elements
+  // This solution is far from ideal because of the universal selector usage,
+  // but is needed to fix https://github.com/twbs/bootstrap/issues/24800
+  > * {
+    margin: $modal-footer-margin-between / 2;
+  }
+}
+
+// Measure scrollbar width for padding body during modal show/hide
+.jscp-modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+// Scale up the modal
+@include media-breakpoint-up(sm) {
+  // Automatically set modal's width for larger viewports
+  .jscp-modal-dialog {
+    max-width: $modal-md;
+    margin: $modal-dialog-margin-y-sm-up auto;
+  }
+
+  .jscp-modal-dialog-scrollable {
+    max-height: subtract(100%, $modal-dialog-margin-y-sm-up * 2);
+
+    .jscp-modal-content {
+      max-height: subtract(100vh, $modal-dialog-margin-y-sm-up * 2);
+    }
+  }
+
+  .jscp-modal-dialog-centered {
+    min-height: subtract(100%, $modal-dialog-margin-y-sm-up * 2);
+
+    &::before {
+      height: subtract(100vh, $modal-dialog-margin-y-sm-up * 2);
+      height: min-content;
+    }
+  }
+
+  .jscp-modal-content {
+    box-shadow: $modal-content-box-shadow-sm-up;
+  }
+
+  .jscp-modal-sm { max-width: $modal-sm; }
+}
+
+@include media-breakpoint-up(lg) {
+  .jscp-modal-lg,
+  .jscp-modal-xl {
+    max-width: $modal-lg;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .jscp-modal-xl { max-width: $modal-xl; }
+}

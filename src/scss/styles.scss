@@ -8,18 +8,23 @@ $white: #ffffff;
 $black: #000000;
 $font-family: Arial, Helvetica, Verdana, sans-serif;
 
+@import "./mixins/variables";
+
+@import "./mixins/breakpoints";
+
 @import "./reset";
 @import "./toggle";
+@import "./modal";
 @import "./cookie-banner";
 @import "./cookie-management";
 
 #jscpDialog {
   // @include reset();
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2147483645;
+  // position: fixed;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
+  // z-index: 2147483645;
   font-family: $font-family;
   font-size: 1rem;
   .jscp__mb-1 {
@@ -97,12 +102,13 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     border-color: transparent;
     background-color: transparent;
     color: var(--jscp-links);
+    padding:0.5rem 1.5rem;
     &:after {
       content: " ";
       display: inline-block;
       position: absolute;
       right: 5px;
-      top: 15px;
+      top: 35%;
       border: solid var(--jscp-links);
       border-width: 0 2px 2px 0;
       padding: 3px;
@@ -111,7 +117,7 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     &.jscp-active {
       &:after {
         transform: rotate(-135deg);
-        top: 20px;
+        top: 43%;
       }
     }
     &:hover,
@@ -121,5 +127,10 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
       border-color: transparent;
       outline: none;
     }
+  }
+  .jscp__btn-reset {
+    border: none;
+    background: none;
+    -webkit-appearance: none;
   }
 }

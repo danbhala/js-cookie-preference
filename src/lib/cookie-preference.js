@@ -10,13 +10,15 @@ class CookiePreferenceClass {
     this.params = params;
     this.initialized = false;
     this.categories = [];
-    if(this.params) {
+    if (this.params) {
       this.init();
     }
   }
 
   // initialize plugin
   init() {
+    const that = this;
+
     if (!this.initialized) {
 
       if (this.params.functional_enable) {
@@ -36,7 +38,7 @@ class CookiePreferenceClass {
       }
 
       this.renderCookieContainer();
-      
+
     }
 
     if (!this.getCookie('cookiesAccepted')) {
@@ -47,6 +49,11 @@ class CookiePreferenceClass {
     // or render cookie management for testing now
     // this.renderCookieManagement();
 
+    // bind global cookie management button
+    document.getElementById('jscp__manageCookiesLink').onclick = function () {
+      that.renderCookieManagement();
+    }
+
     // set initialized to `true`
     this.initialized = true;
   }
@@ -54,21 +61,42 @@ class CookiePreferenceClass {
   setDesign() {
     console.log(this.params);
     let root = document.documentElement;
-    if(this.params.colour_bg) {
+    if (this.params.colour_bg) {
       root.style.setProperty('--jscp-bg', this.params.colour_bg);
     }
-    if(this.params.colour_text) {
+    if (this.params.colour_text) {
       root.style.setProperty('--jscp-text', this.params.colour_text);
     }
-    if(this.params.colour_links) {    
+    if (this.params.colour_links) {
       root.style.setProperty('--jscp-links', this.params.colour_links);
     }
-    if(this.params.colour_cta_text) {
+    if (this.params.colour_cta_text) {
       root.style.setProperty('--jscp-cta-text', this.params.colour_cta_text);
     }
-    if(this.params.colour_cta_bg) {
+    if (this.params.colour_cta_bg) {
       root.style.setProperty('--jscp-cta-bg', this.params.colour_cta_bg);
       root.style.setProperty('--jscp-cta-bg-hover', this.lightenDarkenColor(this.params.colour_cta_bg, -20));
+    }
+  }
+
+  removeDesign() {
+    console.log(this.params);
+    let root = document.documentElement;
+    if (this.params.colour_bg) {
+      root.style.removeProperty('--jscp-bg');
+    }
+    if (this.params.colour_text) {
+      root.style.removeProperty('--jscp-text');
+    }
+    if (this.params.colour_links) {
+      root.style.removeProperty('--jscp-links');
+    }
+    if (this.params.colour_cta_text) {
+      root.style.removeProperty('--jscp-cta-text');
+    }
+    if (this.params.colour_cta_bg) {
+      root.style.removeProperty('--jscp-cta-bg');
+      root.style.removeProperty('--jscp-cta-bg-hover');
     }
   }
 
@@ -81,7 +109,13 @@ class CookiePreferenceClass {
 
   updateCookieContainer(markup, callback) {
     this.setDesign();
-    document.getElementById('jscpDialog').innerHTML = markup;
+    if (markup) {
+      document.getElementById('jscpDialog').innerHTML = markup;
+    } else {
+      document.getElementById('jscpDialog').innerHTML = '';
+      document.body.style.removeProperty("overflow");
+      this.removeDesign();
+    }
     if (callback) {
       callback();
     }
@@ -137,10 +171,20 @@ class CookiePreferenceClass {
     });
 
     const markup = template(data);
-    document.body.style.overflow = "hidden";
     that.updateCookieContainer(markup, function () {
+
+
+      document.getElementById('jscp__cookie-management__modal').style.display = "block";
+      document.getElementById('jscp__cookie-management__modal-backdrop').style.display = "block";
+      document.body.style.setProperty("overflow", "hidden");
+      setTimeout(function () {
+        document.getElementById('jscp__cookie-management__modal').classList.add("show");
+        document.getElementById('jscp__cookie-management__modal').focus();
+        document.getElementById('jscp__cookie-management__modal-backdrop').classList.add("show");
+      }, 150);
+
       // bind various events
-      that.toggleCookieTables();      
+      that.toggleCookieTables();
       that.setDefaultCookieRadios();
       that.updateRadioLabel();
 
@@ -148,21 +192,55 @@ class CookiePreferenceClass {
       document.getElementById('jscp__setCookiePreferences').onclick = function () {
         that.savePreferences();
       }
+      // close button clicked
+      document.getElementById('jscp__cookie-management__close').onclick = function () {
+        that.closeCookieManagement();
+      }
+      document.addEventListener("keydown", function(event) {
+        event = event || window.event;
+        if (event.keyCode == 27) {
+          that.closeCookieManagement();
+        }
+      });
     });
   }
-  
+
+  closeCookieManagement () {
+    const that = this;
+    document.getElementById('jscp__cookie-management__modal').classList.remove("show");
+    document.getElementById('jscp__cookie-management__modal-backdrop').classList.remove("show");
+    setTimeout(function () {
+      that.updateCookieContainer(false, function () {
+        document.getElementById('jscp__manageCookiesLink').focus();
+      });            
+    }, 150);
+  }
+
   toggleCookieTables() {
-    Array.from(document.getElementsByClassName('jscp__btn-toggle')).forEach(function(element) {
-      element.addEventListener('click', function(event) {
-        event.target.classList.toggle("jscp-active");
-        document.getElementById(event.target.getAttribute("data-target")).classList.toggle("jscp-active");
+    const toggleButtons = document.getElementsByClassName('jscp__btn-toggle');
+
+    [].forEach.call(toggleButtons, function (toggleButtons) {
+      toggleButtons.addEventListener('click', function (event) {
+        const openElements = document.querySelectorAll(".jscp__btn-toggle.jscp-active");
+        const currentlyActive = toggleButtons.classList.contains("jscp-active");
+        console.log('openElements', openElements);
+        console.log('currentlyActive', currentlyActive);
+        [].forEach.call(openElements, function (openElement) {
+          openElement.classList.remove("jscp-active");
+          document.getElementById(openElement.getAttribute("data-target")).classList.remove("jscp-active");
+        });
+
+        if (!currentlyActive) {
+          event.target.classList.add("jscp-active");
+          document.getElementById(event.target.getAttribute("data-target")).classList.add("jscp-active");
+        }
       });
-    });    
+    });
   }
 
   updateRadioLabel() {
     const that = this;
-    Array.from(document.getElementsByClassName('jscp__input-radio')).forEach(function(element) {
+    Array.from(document.getElementsByClassName('jscp__input-radio')).forEach(function (element) {
       if (element.checked) {
         document.getElementById(element.getAttribute("id") + '-label-text').innerHTML = that.params.ui_translations_accepted;
       }
@@ -180,7 +258,7 @@ class CookiePreferenceClass {
     });
 
     // reload the page
-    // document.location.reload(true);
+    document.location.reload(true);
   }
 
   setDefaultCookieRadios() {
@@ -189,7 +267,7 @@ class CookiePreferenceClass {
     that.categories.forEach(category => {
       if (that.getCookie('cookie' + that.capitalize(category)) === 'true') {
         document.querySelector('input[name="jscp-input-' + category + '"]').checked = true;
-      }  
+      }
     });
   }
 
@@ -203,7 +281,7 @@ class CookiePreferenceClass {
       }
     }
   }
-  
+
 
   acceptAllCookies() {
     const that = this;
@@ -234,11 +312,11 @@ class CookiePreferenceClass {
     console.log(this.getCookie(name));
     //document.cookie = name + '=' + value + '; expires=' + date.toGMTString();
   }
-  
+
   getCookie(a) {
     var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
     return b ? b.pop() : '';
-  }  
+  }
 
   convertToSlug(Text) {
     return Text
@@ -248,7 +326,7 @@ class CookiePreferenceClass {
       ;
   }
 
-  capitalize (s) {
+  capitalize(s) {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
@@ -266,7 +344,7 @@ class CookiePreferenceClass {
     var newColor = g | (b << 8) | (r << 16);
     return '#' + newColor.toString(16);
   }
-  
+
 }
 
 export function CookiePreference(params) {

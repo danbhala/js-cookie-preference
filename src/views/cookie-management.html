@@ -1,52 +1,63 @@
-<div class="jscp__cookie-management" aria-describedby="jscp__cookie-management__title" role="dialog" lang="en" dir="ltr">
-  <div class="jscp__container">  
-    <button id="jscp__cookie-management__close" type="button" class="jscp__btn jscp__btn-secondary">Close</button>
-    <h2 id="jscp__cookie-management__title" class="jscp__cookie-management__title">Manage which cookies we can use</h2>
-    <p class="jscp__cookie-management__lead">Let us know which cookies we can use when you visit our website. We'll use a cookie to save your settings.</p>
-    <div class="jscp__mb-3">
-      {{#each categories }}
-        <div class="jscp__cookie-management__item">
-          <div class="jscp__cookie-management__item__row">
-            <h3>{{ name }}</h3>
-            <div>
-              {{#if mandatory }}
-                <strong>{{ ../translations/mandatory }}</strong>
-              {{else}}              
-                <div class="ios-toggle-mega-label-wrap">
-                  <label for="jscp-input-{{slug}}"><span id="jscp-input-{{slug}}-label-text" class="jscp-input-label-text">{{ ../translations/declined }}</span></label>
-                  <span class="ios-toggle ios-toggle-reverse">
-                    <input type="checkbox" name="jscp-input-{{slug}}" id="jscp-input-{{slug}}" class="jscp__input-radio">
-                    <label for="jscp-input-{{slug}}"></label>
-                  </span>
+<div class="jscp__cookie-management">
+  <div id="jscp__cookie-management__modal" class="jscp-modal fade" aria-describedby="jscp__cookie-management__title" role="dialog" lang="en" dir="ltr" aria-modal="true" tabindex="-1">
+    <div class="jscp-modal-dialog jscp-modal-lg jscp-modal-dialog-scrollable jscp-modal-dialog-centered">
+      <div class="jscp-modal-content">
+        <div class="jscp-modal-header">
+          <h2 id="jscp__cookie-management__title" class="jscp-modal-title jscp__cookie-management__title">Manage which cookies we can use</h2>
+          <button id="jscp__cookie-management__close" type="button" class="jscp__btn-reset"><span class="sr-only">Close this screen</span><span class="jscp-close"></span></button>
+        </div>
+        <div class="jscp-modal-body">
+          <p class="jscp__cookie-management__lead">Let us know which cookies we can use when you visit our website. We'll use a cookie to save your settings.</p>
+          <div>
+            {{#each categories }}
+              <div class="jscp__cookie-management__item">
+                <div class="jscp__cookie-management__item__row">
+                  <h3>{{ name }}</h3>
+                  <div>
+                    {{#if mandatory }}
+                      <strong>{{ ../translations/mandatory }}</strong>
+                    {{else}}              
+                      <div class="ios-toggle-mega-label-wrap">
+                        <label for="jscp-input-{{slug}}"><span id="jscp-input-{{slug}}-label-text" class="jscp-input-label-text">{{ ../translations/declined }}</span></label>
+                        <span class="ios-toggle ios-toggle-reverse">
+                          <input type="checkbox" name="jscp-input-{{slug}}" id="jscp-input-{{slug}}" class="jscp__input-radio">
+                          <label for="jscp-input-{{slug}}"></label>
+                        </span>
+                      </div>
+                    {{/if}}
+                  </div>
+                  <button type="button" class="jscp__btn jscp__btn-toggle" data-target="jscp__cookie-management__item__details__{{slug}}">{{ ../translations.toggle }}</button>
                 </div>
-              {{/if}}
-            </div>
-            <button type="button" class="jscp__btn jscp__btn-toggle" data-target="jscp__cookie-management__item__details__{{slug}}">{{ ../translations.toggle }}</button>
-          </div>
-          <div id="jscp__cookie-management__item__details__{{slug}}" class="jscp__cookie-management__item__details">
-            {{#if description }}<p>{{ description }}</p>{{/if}}
-            <table class="jscp__cookie-management__item__table">
-              <thead>
-                <tr>
-                  <th scope="col">{{ ../translations/th_name }}</th>
-                  <th scope="col">Expires</th>
-                  <th scope="col">Purpose</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each cookies }}
-                  <tr>
-                    <td>{{ name }}</td>
-                    <td>{{ expires }}</td>
-                    <td>{{ purpose }}</td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>      
+                <div id="jscp__cookie-management__item__details__{{slug}}" class="jscp__cookie-management__item__details">
+                  {{#if description }}<p>{{ description }}</p>{{/if}}
+                  <table class="jscp__cookie-management__item__table">
+                    <thead>
+                      <tr>
+                        <th scope="col">{{ ../translations/th_name }}</th>
+                        <th scope="col">Expires</th>
+                        <th scope="col">Purpose</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each cookies }}
+                        <tr>
+                          <td>{{ name }}</td>
+                          <td>{{ expires }}</td>
+                          <td>{{ purpose }}</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>      
+                </div>
+              </div>
+            {{/each}}
           </div>
         </div>
-      {{/each}}
+        <div class="jscp-modal-footer">
+          <button id="jscp__setCookiePreferences" type="button" class="jscp__btn jscp__btn-primary">Save preferences</button>
+        </div>
+      </div>  
     </div>
-    <button id="jscp__setCookiePreferences" type="button" class="jscp__btn jscp__btn-primary">Save preferences</button>
   </div>
+  <div id="jscp__cookie-management__modal-backdrop" class="jscp-modal-backdrop fade" style="display: none;"></div>
 </div>

@@ -1,8 +1,16 @@
 #jscpDialog {
   .jscp__cookie-banner {
-    line-height: 24px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: $zindex-modal;
+    width: 100%;
+    overflow: hidden;
+
+    font-size: 1rem;
     font-family: $font-family;
-    font-size: 1.125rem;
+    line-height: $line-height-base;
     background-color: var(--jscp-bg);
     color: var(--jscp-text);
     padding: 1.5rem 0;
