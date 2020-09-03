@@ -53,7 +53,7 @@ class CookiePreferenceClass {
     }
 
     // or render cookie management for testing now
-    this.renderCookieManagement();
+    // this.renderCookieManagement();
 
     // bind global cookie management button
     document.getElementById('jscp__manageCookiesLink').onclick = function () {
