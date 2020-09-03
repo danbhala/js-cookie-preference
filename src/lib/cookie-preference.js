@@ -9,7 +9,13 @@ class CookiePreferenceClass {
   constructor(params) {
     this.params = params;
     this.initialized = false;
+    this.hasAccepted = false;
+    this.hasAccepted = this.getCookie('cookiesAccepted') ? true : false;
+    this.hasAcceptedVersion = (this.getCookie('cookiesVersion') === this.params.version) ? true : false;
     this.categories = [];
+    if (this.params.debug) {
+      console.log('CookiePreferenceClass', this.params)
+    }
     if (this.params) {
       this.init();
     }
@@ -41,13 +47,13 @@ class CookiePreferenceClass {
 
     }
 
-    if (!this.getCookie('cookiesAccepted')) {
+    if (!this.hasAccepted || !this.hasAcceptedVersion) {
       // Render Cookie Banner if they have not previously accepted
       this.renderCookieBanner();
     }
 
     // or render cookie management for testing now
-    // this.renderCookieManagement();
+    this.renderCookieManagement();
 
     // bind global cookie management button
     document.getElementById('jscp__manageCookiesLink').onclick = function () {
@@ -75,7 +81,9 @@ class CookiePreferenceClass {
     }
     if (this.params.colour_cta_bg) {
       root.style.setProperty('--jscp-cta-bg', this.params.colour_cta_bg);
-      root.style.setProperty('--jscp-cta-bg-hover', this.lightenDarkenColor(this.params.colour_cta_bg, -20));
+    }
+    if (this.params.font_family) {
+      root.style.setProperty('--jscp-font-family', this.params.font_family);
     }
   }
 
@@ -96,7 +104,9 @@ class CookiePreferenceClass {
     }
     if (this.params.colour_cta_bg) {
       root.style.removeProperty('--jscp-cta-bg');
-      root.style.removeProperty('--jscp-cta-bg-hover');
+    }
+    if (this.params.font_family) {
+      root.style.removeProperty('--jscp-font-family');
     }
   }
 
@@ -148,9 +158,14 @@ class CookiePreferenceClass {
         toggle: that.params.ui_translations_toggle_cookies_cta,
         th_name: that.params.ui_translations_th_name,
         th_expires: that.params.ui_translations_th_expires,
-        th_purpose: that.params.ui_translations_th_purpose
+        th_purpose: that.params.ui_translations_th_purpose,
+        save_preferences_cta: that.params.ui_translations_save_preferences_cta,
+        title: that.params.cookie_modal_title,
+        introduction: that.params.cookie_modal_introduction
       },
-      categories: []
+      categories: [],
+      showCloseButton: that.hasAccepted,
+      primary_cta_class: that.params.primary_cta_class || false
     };
     if (that.params.necessary_cookie_details.length > 0) {
       data.categories.push({
@@ -192,16 +207,19 @@ class CookiePreferenceClass {
       document.getElementById('jscp__setCookiePreferences').onclick = function () {
         that.savePreferences();
       }
-      // close button clicked
-      document.getElementById('jscp__cookie-management__close').onclick = function () {
-        that.closeCookieManagement();
-      }
-      document.addEventListener("keydown", function(event) {
-        event = event || window.event;
-        if (event.keyCode == 27) {
+      // only allow close events if they have previously acccepted
+      if (that.hasAccepted && that.hasAcceptedVersion) {
+        // close button clicked
+        document.getElementById('jscp__cookie-management__close').onclick = function () {
           that.closeCookieManagement();
         }
-      });
+        document.addEventListener("keydown", function(event) {
+          event = event || window.event;
+          if (event.keyCode == 27) {
+            that.closeCookieManagement();
+          }
+        });
+      }
     });
   }
 
@@ -250,14 +268,22 @@ class CookiePreferenceClass {
   savePreferences() {
     const that = this;
 
-    that.setCookie('cookiesAccepted', 'true');
+    // set generic accepted cookie so we dont show the banner again.
+    this.setCookie('cookiesAccepted', 'true');
+    // set cookie version
+    this.setCookie('cookiesVersion', this.params.version);
 
-    that.categories.forEach(category => {
+    this.categories.forEach(category => {
       console.log('cookie' + that.capitalize(category), document.querySelector('input[name="jscp-input-' + category + '"]').checked)
       that.setCookie('cookie' + that.capitalize(category), document.querySelector('input[name="jscp-input-' + category + '"]').checked);
     });
 
-    // reload the page
+    this.reloadPage();
+
+  }
+
+  reloadPage() {
+    window.scrollTo(0,0);
     document.location.reload(true);
   }
 
@@ -286,14 +312,15 @@ class CookiePreferenceClass {
   acceptAllCookies() {
     const that = this;
     // set generic accepted cookie so we dont show the banner again.
-    that.setCookie('cookiesAccepted', 'true');
+    this.setCookie('cookiesAccepted', 'true');
+    // set cookie version
+    this.setCookie('cookiesVersion', this.params.version);
 
     that.categories.forEach(element => {
       that.setCookie('cookie' + that.capitalize(element), 'true');
     });
 
-    // reload the page
-    // document.location.reload(true);
+    this.reloadPage();
   }
 
   // add new user
@@ -305,12 +332,9 @@ class CookiePreferenceClass {
   }
 
   setCookie(name, value, domain = document.domain, path = '/') {
-    console.log('setCookie:', name + ' = ' + value);
     var date = new Date();
     date.setTime(date.getTime() + (356 * 24 * 60 * 60 * 1000));
     document.cookie = `${name}=${value}; expires=${date.toGMTString()}; path=${path}; domain=${domain};`;
-    console.log(this.getCookie(name));
-    //document.cookie = name + '=' + value + '; expires=' + date.toGMTString();
   }
 
   getCookie(a) {
@@ -329,20 +353,6 @@ class CookiePreferenceClass {
   capitalize(s) {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
-  }
-
-  lightenDarkenColor(col, amt) {
-    console.log(col);
-    if (col.charAt(0) === '#') {
-      col = col.substring(1);
-    }
-    console.log(col);
-    var num = parseInt(col, 16);
-    var r = (num >> 16) + amt;
-    var b = ((num >> 8) & 0x00FF) + amt;
-    var g = (num & 0x0000FF) + amt;
-    var newColor = g | (b << 8) | (r << 16);
-    return '#' + newColor.toString(16);
   }
 
 }

@@ -48,10 +48,10 @@
     line-height: 24px;
     margin-top: 0;
     a {
-      color: var(--jscp-text);
-      text-decoration: underline;
+      color: var(--jscp-links);
+      text-decoration: none;
       &:hover {
-        text-decoration: none;
+        text-decoration: underline;
       }
     }
   }

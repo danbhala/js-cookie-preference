@@ -3,38 +3,37 @@
     font-size: 1rem;
     font-family: $font-family;
     line-height: $line-height-base;
-    &__title {
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: 1.5rem;
+    color: var(--jscp-text);
+    h2 {
+      @extend .jscp-reset;
+      font-size: 1.25rem;
       font-weight: bold;
     }
-    &__lead {
-      margin-top: 0;
+    p {
+      @extend .jscp-reset;
       margin-bottom: 1rem;
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
     .jscp-input-label-text, strong {
+      @extend .jscp-reset;
       color: var(--jscp-text);
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: bold;
       opacity: 0.7;
+      width: 180px;
     }
     &__item {
       margin-bottom: 0.5rem;
-      &:last-of-type {
-        margin-bottom: 0;
-      }
       &__row {
         display: flex;
         align-items: baseline;
         flex-wrap: wrap;
         h3 {
-          font-size: 1.25rem;
+          @extend .jscp-reset;
+          font-size: 1rem;
           font-weight: bold;
           min-width: 40%;
           width: 100%;
-          margin-bottom: 0;
           @media (min-width:768px)  { 
             width: auto;
           }
@@ -50,14 +49,18 @@
       }
       &__details {
         display: none;
+        margin-top: 0.5rem;
         &.jscp-active {
           display: block;
         }
       }
-      &__table {        
+      &__table {   
+        @extend .jscp-reset;     
         width: 100%;
+        line-height: $line-height-base;
         margin-bottom: 1rem;
         background-color: transparent;      
+        font-size: 0.875rem;
         th, td {
           padding: .75rem .75rem .75rem 0;
           vertical-align: top;
@@ -87,6 +90,7 @@
     }
   }
   .jscp-close {
+    @extend .jscp-reset;
     display: inline-block;
     position: relative;
     width: 32px;
@@ -102,7 +106,7 @@
     content: ' ';
     height: 33px;
     width: 2px;
-    background-color: #333;
+    background-color: var(--jscp-text);
   }
   .jscp-close:before {
     transform: rotate(45deg);

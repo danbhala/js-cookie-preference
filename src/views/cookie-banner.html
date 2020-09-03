@@ -8,7 +8,11 @@
       </p>
     </div>
     <div class="jscp__cookie-banner__controls">
-      <button id="jscp__acceptAllCookies" type="button" class="jscp__btn jscp__btn-primary jscp__mb-2">{{ cookie_banner_accept_cta_text }}</button>
+      {{#if primary_cta_class }}
+        <button id="jscp__acceptAllCookies" type="button" class="{{ primary_cta_class }} jscp__mb-2">{{ cookie_banner_accept_cta_text }}</button>
+      {{else}}
+        <button id="jscp__acceptAllCookies" type="button" class="jscp__btn jscp__btn-primary jscp__mb-2">{{ cookie_banner_accept_cta_text }}</button>
+      {{/if}}      
       <button id="jscp__manageCookies" type="button" class="jscp__btn-link">{{cookie_banner_manage_cta_text }}</button>
     </div>
   </div>

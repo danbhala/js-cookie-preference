@@ -6,11 +6,12 @@ $celadon-blue: #457b9dff;
 $prussian-blue: #1d3557ff;
 $white: #ffffff;
 $black: #000000;
-$font-family: Arial, Helvetica, Verdana, sans-serif;
+$font-family: var(--jscp-font-family);
 
-@import "./mixins/variables";
 
-@import "./mixins/breakpoints";
+@import "./functions";
+@import "./variables";
+@import "./mixins";
 
 @import "./reset";
 @import "./toggle";
@@ -19,14 +20,6 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
 @import "./cookie-management";
 
 #jscpDialog {
-  // @include reset();
-  // position: fixed;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
-  // z-index: 2147483645;
-  font-family: $font-family;
-  font-size: 1rem;
   .jscp__mb-1 {
     margin-bottom: 0.5rem !important;
   }
@@ -61,6 +54,7 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     white-space: nowrap;
     padding:1rem 1.5rem;
     font-size: 1.125rem;
+    font-family: $font-family;
     border-radius: 5px;
     user-select: none;
     font-weight: bold;
@@ -74,9 +68,8 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     &:hover,
     &:active,
     &:focus {
-      background-color: var(--jscp-cta-bg-hover);
-      border-color: var(--jscp-cta-bg-hover);
       color: var(--jscp-cta-text);
+      text-decoration: underline;
     }
   }
 
@@ -86,14 +79,14 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     background-color: transparent;
     color: var(--jscp-links);
     font-size: 1.125rem;
-    text-decoration: underline;
+    text-decoration: none;
     &:hover,
     &:active,
     &:focus {
       background-color: transparent;
       border-color: transparent;
       outline: none;
-      text-decoration: none;
+      text-decoration: underline;
     }
   }
 
@@ -102,6 +95,7 @@ $font-family: Arial, Helvetica, Verdana, sans-serif;
     border-color: transparent;
     background-color: transparent;
     color: var(--jscp-links);
+    font-size: 1rem;
     padding:0.5rem 1.5rem;
     &:after {
       content: " ";

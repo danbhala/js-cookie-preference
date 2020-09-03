@@ -1,13 +1,17 @@
 <div class="jscp__cookie-management">
   <div id="jscp__cookie-management__modal" class="jscp-modal fade" aria-describedby="jscp__cookie-management__title" role="dialog" lang="en" dir="ltr" aria-modal="true" tabindex="-1">
-    <div class="jscp-modal-dialog jscp-modal-lg jscp-modal-dialog-scrollable jscp-modal-dialog-centered">
+    <div class="jscp-modal-dialog jscp-modal-dialog-centered jscp-modal-dialog-scrollable">
       <div class="jscp-modal-content">
         <div class="jscp-modal-header">
-          <h2 id="jscp__cookie-management__title" class="jscp-modal-title jscp__cookie-management__title">Manage which cookies we can use</h2>
-          <button id="jscp__cookie-management__close" type="button" class="jscp__btn-reset"><span class="sr-only">Close this screen</span><span class="jscp-close"></span></button>
+          <h2 id="jscp__cookie-management__title" class="jscp-modal-title jscp__cookie-management__title">{{ translations/title }}</h2>
+          {{#if showCloseButton }}
+            <button id="jscp__cookie-management__close" type="button" class="jscp__btn-reset"><span class="sr-only">Close this screen</span><span class="jscp-close"></span></button>
+          {{/if}}
         </div>
         <div class="jscp-modal-body">
-          <p class="jscp__cookie-management__lead">Let us know which cookies we can use when you visit our website. We'll use a cookie to save your settings.</p>
+          {{#if translations/introduction }}
+            <p class="jscp__cookie-management__lead">{{ translations/introduction }}</p>
+          {{/if}}
           <div>
             {{#each categories }}
               <div class="jscp__cookie-management__item">
@@ -16,7 +20,7 @@
                   <div>
                     {{#if mandatory }}
                       <strong>{{ ../translations/mandatory }}</strong>
-                    {{else}}              
+                    {{else}}
                       <div class="ios-toggle-mega-label-wrap">
                         <label for="jscp-input-{{slug}}"><span id="jscp-input-{{slug}}-label-text" class="jscp-input-label-text">{{ ../translations/declined }}</span></label>
                         <span class="ios-toggle ios-toggle-reverse">
@@ -34,8 +38,8 @@
                     <thead>
                       <tr>
                         <th scope="col">{{ ../translations/th_name }}</th>
-                        <th scope="col">Expires</th>
-                        <th scope="col">Purpose</th>
+                        <th scope="col">{{ ../translations/th_expires }}</th>
+                        <th scope="col">{{ ../translations/th_purpose }}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -47,16 +51,20 @@
                         </tr>
                       {{/each}}
                     </tbody>
-                  </table>      
+                  </table>
                 </div>
               </div>
             {{/each}}
           </div>
         </div>
         <div class="jscp-modal-footer">
-          <button id="jscp__setCookiePreferences" type="button" class="jscp__btn jscp__btn-primary">Save preferences</button>
+          {{#if primary_cta_class }}
+            <button id="jscp__setCookiePreferences" type="button" class="{{ primary_cta_class }}">{{ translations/save_preferences_cta }}</button>
+          {{else}}
+            <button id="jscp__setCookiePreferences" type="button" class="jscp__btn jscp__btn-primary">{{ translations/save_preferences_cta }}</button>
+          {{/if}}
         </div>
-      </div>  
+      </div>
     </div>
   </div>
   <div id="jscp__cookie-management__modal-backdrop" class="jscp-modal-backdrop fade" style="display: none;"></div>
