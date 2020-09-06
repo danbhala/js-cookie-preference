@@ -53,7 +53,7 @@ class CookiePreferenceClass {
     }
 
     // or render cookie management for testing now
-    // this.renderCookieManagement();
+    this.renderCookieManagement();
 
     // bind global cookie management button
     document.getElementById('jscp__manageCookiesLink').onclick = function () {
@@ -164,8 +164,7 @@ class CookiePreferenceClass {
         introduction: that.params.cookie_modal_introduction
       },
       categories: [],
-      showCloseButton: that.hasAccepted,
-      primary_cta_class: that.params.primary_cta_class || false
+      primary_cta_class: that.params.primary_cta_class || 'jscp__btn jscp__btn-primary'
     };
     if (that.params.necessary_cookie_details.length > 0) {
       data.categories.push({
@@ -207,19 +206,20 @@ class CookiePreferenceClass {
       document.getElementById('jscp__setCookiePreferences').onclick = function () {
         that.savePreferences();
       }
-      // only allow close events if they have previously acccepted
-      if (that.hasAccepted && that.hasAcceptedVersion) {
-        // close button clicked
-        document.getElementById('jscp__cookie-management__close').onclick = function () {
+      
+      // close button clicked
+      document.getElementById('jscp__cookie-management__close').onclick = function () {
+        that.closeCookieManagement();
+      }
+
+      // escape button pressed
+      document.addEventListener("keydown", function(event) {
+        event = event || window.event;
+        if (event.keyCode == 27) {
           that.closeCookieManagement();
         }
-        document.addEventListener("keydown", function(event) {
-          event = event || window.event;
-          if (event.keyCode == 27) {
-            that.closeCookieManagement();
-          }
-        });
-      }
+      });
+      
     });
   }
 
@@ -258,10 +258,13 @@ class CookiePreferenceClass {
 
   updateRadioLabel() {
     const that = this;
-    Array.from(document.getElementsByClassName('jscp__input-radio')).forEach(function (element) {
-      if (element.checked) {
-        document.getElementById(element.getAttribute("id") + '-label-text').innerHTML = that.params.ui_translations_accepted;
-      }
+    const radios = document.getElementsByClassName('jscp__input-radio');
+    [].forEach.call(radios, function (radio) {
+      const label = document.getElementById(radio.getAttribute("id") + '-label-text');
+      radio.addEventListener('change', (event) => {
+        label.innerHTML = event.target.checked ? that.params.ui_translations_accepted : that.params.ui_translations_declined;
+      });
+      label.innerHTML = radio.checked ? that.params.ui_translations_accepted : that.params.ui_translations_declined;
     });
   }
 
@@ -334,7 +337,7 @@ class CookiePreferenceClass {
   setCookie(name, value, domain = document.domain, path = '/') {
     var date = new Date();
     date.setTime(date.getTime() + (356 * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value}; expires=${date.toGMTString()}; path=${path}; domain=${domain};`;
+    document.cookie = `${name}=${value}; expires=${date.toGMTString()}; path=${path}; domain=${domain};SameSite=None Secure`;
   }
 
   getCookie(a) {
