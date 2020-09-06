@@ -52,9 +52,6 @@ class CookiePreferenceClass {
       this.renderCookieBanner();
     }
 
-    // or render cookie management for testing now
-    this.renderCookieManagement();
-
     // bind global cookie management button
     document.getElementById('jscp__manageCookiesLink').onclick = function () {
       that.renderCookieManagement();
@@ -65,7 +62,6 @@ class CookiePreferenceClass {
   }
 
   setDesign() {
-    console.log(this.params);
     let root = document.documentElement;
     if (this.params.colour_bg) {
       root.style.setProperty('--jscp-bg', this.params.colour_bg);
@@ -88,7 +84,6 @@ class CookiePreferenceClass {
   }
 
   removeDesign() {
-    console.log(this.params);
     let root = document.documentElement;
     if (this.params.colour_bg) {
       root.style.removeProperty('--jscp-bg');
@@ -241,8 +236,6 @@ class CookiePreferenceClass {
       toggleButtons.addEventListener('click', function (event) {
         const openElements = document.querySelectorAll(".jscp__btn-toggle.jscp-active");
         const currentlyActive = toggleButtons.classList.contains("jscp-active");
-        console.log('openElements', openElements);
-        console.log('currentlyActive', currentlyActive);
         [].forEach.call(openElements, function (openElement) {
           openElement.classList.remove("jscp-active");
           document.getElementById(openElement.getAttribute("data-target")).classList.remove("jscp-active");
@@ -277,7 +270,6 @@ class CookiePreferenceClass {
     this.setCookie('cookiesVersion', this.params.version);
 
     this.categories.forEach(category => {
-      console.log('cookie' + that.capitalize(category), document.querySelector('input[name="jscp-input-' + category + '"]').checked)
       that.setCookie('cookie' + that.capitalize(category), document.querySelector('input[name="jscp-input-' + category + '"]').checked);
     });
 
